@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+   <div id="parent">
+        <button onclick="back()" class="hide back"><span class="backword">&#9204;</span> Back</button>
+        <div class="headercontainer">
+            <div>
+                <h1>Task <span>List</span></h1>
+            </div>
+            <div>
+                <button onclick="showAddTask()" class="additemsA">+</button>
+                <button onclick="showAddTask()" class="additems"><span>+</span> Add Item</button>
+            </div>
+        </div>
+        <p id="notask" class="notask">No Items in the To-Do list</p>
+        <div id="cardcontainer" class="cardcontainerdisplay"></div>
+        <div id="singleCard" class="hide"></div>
+    </div>
+
+    <!-- add take popup -->
+    <div class="addtaskpopupcontainer">
+        <div class="hide addtaskpopup" id="addtaskpopup">
+            <h3 >Add New List</h3>
+            <input type="text" id="cardname" placeholder="Add New List">
+            <div>
+                <button onclick="addCard()">Add</button>
+                <button onclick="hideAddTask()">Close</button>
+            </div>
+        </div>
+    </div>
+    <div id="addItemPopup" class="additemspopupp hide">
+
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
