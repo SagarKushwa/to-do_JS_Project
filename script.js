@@ -5,6 +5,7 @@ var parent = document.getElementById('parent')
 var addItemPopup = document.getElementById('addItemPopup')
 var notask = document.getElementById('notask')
 var singlecard = document.getElementById('singleCard')
+var isssinglecard = false
 
 // show task button
 function showAddTask()
@@ -39,8 +40,9 @@ function addCard(){
     card.appendChild(cardHeading)
     card.appendChild(line)
     card.appendChild(itemList)
-    card.appendChild(deleteButton)
     card.appendChild(addItem)
+    card.appendChild(deleteButton)
+    
 
     //give value to element
     cardHeading.innerText = cardname.value
@@ -57,7 +59,35 @@ function addCard(){
     })
 
     // add item   
-    addItem.addEventListener('click', () => {
+    addItem.addEventListener('click', () => additemfunction(itemList)) 
+
+    //from here..........
+
+
+    cardHeading.addEventListener('click', () => {
+        isssinglecard = true
+        singlecard.classList.remove('hide')
+        cardcontainer.classList.add('hide')
+        cardcontainer.classList.remove('cardcontainerdisplay')
+        singlecard.classList.add('cardcontainerdisplay')
+        let copycard = card.cloneNode(true)
+        singlecard.appendChild(copycard)
+        copycard.lastElementChild.addEventListener("click", ()=>{
+            card.remove()
+            copycard.remove()
+            if(cardcontainer.innerText === '')
+            notask.classList.remove('hide')
+        })
+        const copyaddbutton = copycard.querySelector('button')
+        const copylist = copycard.querySelector("div")
+        copyaddbutton.addEventListener('click', ()=>additemfunction(itemList, copylist))
+        parent.firstElementChild.classList.remove('hide')
+    })
+    
+}
+
+function additemfunction(itemList, copylist)
+{
         
         addItemPopup.classList.remove('hide')
         parent.classList.add('blur')
@@ -102,11 +132,21 @@ function addCard(){
             markdone.style.padding = "2px"
             markdone.style.backgroundColor = "blue"
             markdone.style.border = "1px solid blue"
-            markdone.addEventListener('click', () =>
-            {
+
+            if(isssinglecard){
+                var copyitem = item.cloneNode(true)
+                copylist.appendChild(copyitem)
+
+            }
+
+            markdone.addEventListener('click', () => {
                 // itemtext.style.color = "blue;"
                 markdone.classList.add('hide')
                 itemtext.classList.add('line')
+
+                if(isssinglecard){
+                    copyitem.lastElementChild.style.textDecoration = "line-through"
+                }
             })
             
             //appending the item to item list
@@ -123,23 +163,11 @@ function addCard(){
             addItemPopup.innerText = ""
         })
 
-    })
-
-
-    cardHeading.addEventListener('click', () => {
-        singlecard.classList.remove('hide')
-        cardcontainer.classList.add('hide')
-        cardcontainer.classList.remove('cardcontainerdisplay')
-        singlecard.classList.add('cardcontainerdisplay')
-        let copycard = card.cloneNode(true)
-        singlecard.appendChild(copycard)
-        parent.firstElementChild.classList.remove('hide')
-    })
-    
 }
 
 function back()
 {
+    isssinglecard = false
     parent.firstElementChild.classList.add('hide')
     singlecard.classList.add('hide')
     cardcontainer.classList.remove('hide')
